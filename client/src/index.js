@@ -3,12 +3,21 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// Imported Chakra UI for frontend ascetics.
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter } from "react-router-dom";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <BrowserRouter>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
