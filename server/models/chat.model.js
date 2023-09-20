@@ -1,21 +1,35 @@
 const mongoose = require('mongoose');
 
 const ChatSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: [true, "Please provide a title"]
-        
-    },
-    price: {
-        type: Number,
-        required: [true, "Please provide a price"]
-    },
-    description: {
-        type: String,
+    users: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", // <----- Name of Model
         required: [true, "Please provide a description"],
         maxlength: [200, "Description should be under 200 characters"]
-        
-    }
+    }],
+
+    // This is used to display the last message sent or received by the user.
+    latestMessage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message" // <----- Name of Model
+    },
+
+    groupAdmin: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
+    chatName: {
+        type: String,
+        trim: true,
+        //required: [true, "Please provide a title"]
+
+    },
+    isGroupChat: {
+        type: Boolean,
+        default: False,
+        //required: [true, "Please provide a price"]
+    },
 
 },
     { timestamps: true }
