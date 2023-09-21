@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 // Imported Chakra UI for frontend ascetics.
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from "react-router-dom";
+import Login from "./Components/Login";
+import Register from "./Components/Register";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
