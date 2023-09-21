@@ -4,8 +4,6 @@ const ChatSchema = new mongoose.Schema({
     users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", // <----- Name of Model
-        // required: [true, "Please provide a description"],
-        // maxlength: [200, "Description should be under 200 characters"]
     }],
 
     // This is used to display the last message sent or received by the user.
