@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Asap&family=DM+Sans:opsz,wght@9..40,300&family=Figtree&family=Roboto:wght@300&display=swap');
 
 .App{
-    /* min-height: 100vh; */
-    min-height: 350px;
+    min-height: 100vh; 
     display: flex;
     background-image: url("./vecteezy_hand-drawn-communication-seamless-pattern-on-chalkboard_24220863.jpg");
     background-size: cover;

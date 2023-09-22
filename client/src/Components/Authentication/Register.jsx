@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, VStack, Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
+import { FormControl, FormLabel, VStack, Input, Stack, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
 
 
@@ -16,20 +16,21 @@ const Register = () => {
     const submitHandler = ()=> {};
 
     return <VStack spacing="5px">
-        <FormControl id="name">
-            <FormLabel>
+        <FormControl id="register" isRequired>
+            <FormLabel>Name</FormLabel>
                 <InputGroup>
                     <Input type="Name" placeholder="Enter Your Name" onChange={(e) => setName(e.target.value)} />
                 </InputGroup>
-            </FormLabel>
-        </FormControl>
-        <FormControl id="email" isRequired>
-            <FormLabel>
+            
+        {/* </FormControl> */}
+        {/* <FormControl id="email" isRequired> */}
+            <FormLabel>Email</FormLabel>
                 <Input placeholder="Enter Your Email" onChange={(e) => setEmail(e.target.value)} />
-            </FormLabel>
-        </FormControl>
-        <FormControl id="password" isRequired>
-            <FormLabel>
+            
+        {/* </FormControl>
+        <FormControl id="password" isRequired> */}
+            <FormLabel>Password</FormLabel>
+                <Stack>
                 <InputGroup>
                     <Input type={show ? "text" : "password"} placeholder="Enter Your Password" onChange={(e) => setPassword(e.target.value)} />
                     <InputRightElement width="4.0 rem">
@@ -38,24 +39,33 @@ const Register = () => {
                         </Button>
                     </InputRightElement>
                 </InputGroup>
-            </FormLabel>
-        </FormControl>
-        <FormControl id="confirm-password" isRequired>
-            <FormLabel>
+                </Stack>
+            
+        {/* </FormControl>
+        <FormControl id="confirm-password" isRequired> */}
+            <FormLabel>Confirm Password</FormLabel>
+                <InputGroup>
                 <Input type={show ? "text" : "confirmPassword"} placeholder="Confirm Your Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 <InputRightElement width="4.0 rem">
                     <Button height="1.5rem" size={"sm"} onClick={handleClick}>
                         {show ? "Hide" : "Show"}
                     </Button>
                 </InputRightElement>
-            </FormLabel>
-        </FormControl>
-        <FormControl id="url">
+                </InputGroup>
+            
+        {/* </FormControl>
+        <FormControl id="url"> */}
             <FormLabel>Upload Your Picture</FormLabel>
+            <InputGroup>
             <Input type="file" p={1.5} accept="image/*" onChange={(e) => postDetails(e.target.files[0])} />
+            </InputGroup>
         </FormControl>
         <Button colorScheme="green" width="100%" style={{marginTop : 15}} onClick={submitHandler}>
         Register
         </Button>
     </VStack>;
 }
+
+
+
+export default Register

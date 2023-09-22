@@ -12,13 +12,12 @@ const Login = () => {
     const submitHandler = () => { };
 
     return <VStack spacing="5px">
-        <FormControl id="email" isRequired>
-            <FormLabel>
+        <FormControl id="login" isRequired>
+            <FormLabel>Email </FormLabel>
                 <Input placeholder="Enter Your Email" onChange={(e) => setEmail(e.target.value)} />
-            </FormLabel>
-        </FormControl>
-        <FormControl id="password" isRequired>
-            <FormLabel>
+        {/* </FormControl> */}
+        {/* /<FormControl id="password" isRequired> */}
+            <FormLabel>Password </FormLabel>
                 <InputGroup>
                     <Input type={show ? "text" : "password"} placeholder="Enter Your Password" onChange={(e) => setPassword(e.target.value)} />
                     <InputRightElement width="4.0 rem">
@@ -27,14 +26,15 @@ const Login = () => {
                         </Button>
                     </InputRightElement>
                 </InputGroup>
-            </FormLabel>
+            
         </FormControl>
-        <FormControl id="url">
-            <FormLabel>Upload Your Picture</FormLabel>
-            <Input type="file" p={1.5} accept="image/*" onChange={(e) => postDetails(e.target.files[0])} />
-        </FormControl>
-        <Button colorScheme="green" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
-            Register
+        <Button colorScheme="blue" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
+            Login
         </Button>
     </VStack>;
 }
+
+
+
+
+export default Login
