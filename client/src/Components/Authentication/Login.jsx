@@ -13,22 +13,22 @@ const Login = () => {
 
     return <VStack spacing="5px">
         <FormControl id="login" isRequired>
-            <FormLabel>Email </FormLabel>
-                <Input placeholder="Enter Your Email" onChange={(e) => setEmail(e.target.value)} />
-        {/* </FormControl> */}
-        {/* /<FormControl id="password" isRequired> */}
-            <FormLabel>Password </FormLabel>
-                <InputGroup>
-                    <Input type={show ? "text" : "password"} placeholder="Enter Your Password" onChange={(e) => setPassword(e.target.value)} />
-                    <InputRightElement width="4.0 rem">
-                        <Button height="1.5rem" size={"sm"} onClick={handleClick}>
-                            {show ? "Hide" : "Show"}
-                        </Button>
-                    </InputRightElement>
-                </InputGroup>
-            
+            <FormLabel>Email</FormLabel>
+            <Input placeholder="Enter Your Email" onChange={(e) => setEmail(e.target.value)} />
+            {/* </FormControl> */}
+            {/* /<FormControl id="password" isRequired> */}
+            <FormLabel>Password</FormLabel>
+            <InputGroup>
+                <Input type={show ? "text" : "password"} placeholder="Enter Your Password" onChange={(e) => setPassword(e.target.value)} />
+                <InputRightElement width="4.0 rem">
+                    <Button height="1.5rem" size={"sm"} onClick={handleClick}>
+                        {show ? "Hide" : "Show"}
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
+
         </FormControl>
-        <Button colorScheme="blue" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
+        <Button colorScheme="whatsapp" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
             Login
         </Button>
     </VStack>;
