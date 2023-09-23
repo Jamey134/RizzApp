@@ -1,6 +1,7 @@
 // const chat = require("../models/chat.model")
 
 
+
 module.exports = {
 
 
@@ -8,6 +9,8 @@ module.exports = {
     testTest: (req, res) => {
         res.json({msg: "ITS WORKING!!!"})
     },
+
+
 
 
 
