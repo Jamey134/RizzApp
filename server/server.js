@@ -10,6 +10,7 @@ app.use( express.json() ); //Allows app to accept json
 app.use( express.urlencoded({ extended: true }) ); //Allows app to read json
 app.use(cors())
 
+
 //connects ther server to the routes section. Therefore, attaching all of the routes.
 const routeBridge = require("./routes/chat.routes") 
 routeBridge(app)
