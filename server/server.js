@@ -12,7 +12,9 @@ app.use(cors())
 
 
 //connects ther server to the routes section. Therefore, attaching all of the routes.
-const routeBridge = require("./routes/chat.routes") 
-routeBridge(app)
+const routeBridgeChat = require("./routes/chat.routes" ) 
+routeBridgeChat(app)
+const routeBridgeUser = require("./routes/user.routes" ) 
+routeBridgeUser(app)
 
 app.listen(port, () => console.log("---------> SERVER IS ONLINE!!! port = ", port));

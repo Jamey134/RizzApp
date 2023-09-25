@@ -7,6 +7,8 @@ module.exports = app => {
 
     app.post('/api/users', UserController.registerUser);
 
+    
+    
     // app.post("/login", authUser)
 
     
