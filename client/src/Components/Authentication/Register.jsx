@@ -5,7 +5,7 @@ import { useToast } from '@chakra-ui/react'
 
 
 const Register = () => {
-    const [show, setShow] = useState()
+    const [show, setShow] = useState(false)
     const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
@@ -15,7 +15,7 @@ const Register = () => {
     const toast = useToast() // The toast component is used to give feedback to users after an action has taken place.
 
     const handleClick = () => setShow(!show);
-    //const postDetails = () => setProfilePic(profilePic);
+
     const postDetails = (profilePic) => {
         setLoading(true);
         if (profilePic === undefined) {
@@ -28,12 +28,39 @@ const Register = () => {
             });
             return;
         }
-        if(profilePic.type==="image/jpeg" || profilePic.type==="image/png"){
+        if (profilePic.type === "image/jpeg" || profilePic.type === "image/png") {
             const data = new FormData();
             data.append("file", profilePic); // (key, value)
-            data.append("upload_preset", "rizz-app")
-            data.append("cloud_name", "Jamey134")
+            data.append("upload_preset", "rizz-app");
+            data.append("cloud_name", "jamey134");
+            fetch("https://api.cloudinary.com/v1_1/jamey134/image/upload", {
+                //configurations
+                method: "post",
+                body: data,
+            })
+                .then((res) => res.json())
+                .then(data => {
+                    setProfilePic(data.url.toString()); //Double check this method
+                    console.log(data);
+                    setLoading(false);
+                })
+                // if an error occurs...
+                .catch((err) => {
+                    console.log(err);
+                    setLoading(false);
+                });
+            //if the data aren't images...
         }
+        else {
+            toast({
+                title: "Please Select an Image",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+        }
+
     };
 
     const submitHandler = () => { };
@@ -84,7 +111,7 @@ const Register = () => {
                 <Input type="file" p={1.5} accept="image/*" onChange={(e) => postDetails(e.target.files[0])} />
             </InputGroup>
         </FormControl>
-        <Button colorScheme="messenger" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
+        <Button colorScheme="messenger" width="100%" style={{ marginTop: 15 }} onClick={submitHandler} isLoading={loading}>
             Register</Button>
     </VStack>;
 }
