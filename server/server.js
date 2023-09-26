@@ -1,14 +1,20 @@
 require('dotenv').config();
 require('./config/mongoose.config');
-const cors = require('cors');
 
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
+const {notFound, errorHandler} = require("../server/middleware/errorMiddleware")
+
 
 app.use( express.json() ); //Allows app to accept json
 app.use( express.urlencoded({ extended: true }) ); //Allows app to read json
 app.use(cors())
+
+// 
+app.use(notFound);
+app.use(errorHandler);
 
 
 //connects ther server to the routes section. Therefore, attaching all of the routes.

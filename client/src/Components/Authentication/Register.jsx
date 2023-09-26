@@ -1,5 +1,6 @@
 import { FormControl, FormLabel, VStack, Input, Stack, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useToast } from '@chakra-ui/react'
 
 
 
@@ -10,9 +11,31 @@ const Register = () => {
     const [password, setPassword] = useState()
     const [confirmPassword, setConfirmPassword] = useState()
     const [profilePic, setProfilePic] = useState()
+    const [loading, setLoading] = useState(false)
+    const toast = useToast() // The toast component is used to give feedback to users after an action has taken place.
 
     const handleClick = () => setShow(!show);
-    const postDetails = () => setProfilePic(profilePic);
+    //const postDetails = () => setProfilePic(profilePic);
+    const postDetails = (profilePic) => {
+        setLoading(true);
+        if (profilePic === undefined) {
+            toast({
+                title: "Please Select an Image",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            return;
+        }
+        if(profilePic.type==="image/jpeg" || profilePic.type==="image/png"){
+            const data = new FormData();
+            data.append("file", profilePic); // (key, value)
+            data.append("upload_preset", "rizz-app")
+            data.append("cloud_name", "Jamey134")
+        }
+    };
+
     const submitHandler = () => { };
 
     return <VStack spacing="5px">
@@ -28,7 +51,7 @@ const Register = () => {
             <Input placeholder="Enter Your Email" onChange={(e) => setEmail(e.target.value)} />
 
         </FormControl>
-        
+
         <FormControl id="password" isRequired>
             <FormLabel>Password</FormLabel>
             <Stack>
