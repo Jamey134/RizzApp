@@ -33,15 +33,39 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             profilePic: user.profilePic,
-            
-    // A JSON web token(JWT) is JSON Object which is used to securely transfer information over the web(between two parties). It can be used for an authentication system and can also be used for information exchange.
+
+            // A JSON web token(JWT) is JSON Object which is used to securely transfer information over the web(between two parties). It can be used for an authentication system and can also be used for information exchange.
             token: generateToken(user._id),
         })
     } else {
         res.status(400);
         throw new Error("Failed to create User")
     }
-    
+
+})
+
+
+const authUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (user ) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profilePic: user.profilePic,
+            token: generateToken(user._id)
+        })
+    }
+        else {
+            res.status(401);
+            throw new Error("Invalid Email or Password. Please Try Again.");
+        }
+
+
+
 })
 
 module.exports = { registerUser };

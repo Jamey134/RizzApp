@@ -31,6 +31,19 @@ const UserSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
+// The pre element allows authors to insert a preformatted text into the document
+UserSchema.pre("save", async function (next){
+    if(!this.modified) {
+        next()
+    }
+
+    
+// A salt is a random piece of data that is used as an additional input to a one-way function that hashes data or a password. 
+// "this" keyword refers to an object.
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt)
+})
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User

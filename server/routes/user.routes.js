@@ -9,7 +9,7 @@ module.exports = app => {
 
     
     
-    // app.post("/login", authUser)
+    app.post("/login", UserController.authUser);
 
     
 
