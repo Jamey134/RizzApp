@@ -2,6 +2,10 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/user.model');
 const generateToken = require("../config/generateToken")
 
+const testTest = asyncHandler(async (req, res) => {
+    res.json({ msg: "ITS WORKING!!!" })
+})
+
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password, profilePic } = req.body;
 
@@ -30,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
             password,
             profilePic,
         })
-    
+
         if (user) {
             // status(201) means "successful"
             res.status(201).json({
@@ -38,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 name: user.name,
                 email: user.email,
                 profilePic: user.profilePic,
-    
+
                 // A JSON web token(JWT) is JSON Object which is used to securely transfer information over the web(between two parties). It can be used for an authentication system and can also be used for information exchange.
                 token: generateToken(user._id),
             })
@@ -47,8 +51,7 @@ const registerUser = asyncHandler(async (req, res) => {
             throw new Error("Failed to create User")
         }
     }
-
-})
+});
 
 
 const authUser = asyncHandler(async (req, res) => {
@@ -69,11 +72,19 @@ const authUser = asyncHandler(async (req, res) => {
         res.status(401);
         throw new Error("Invalid Email or Password. Please Try Again.");
     }
+});
 
+const allUsers = asyncHandler(async (req, res) => {
+    const keyword = req.query.search ? {
+        // $or is an operator used for performing logical OR operations within queries. It allows you to select documents where at least one of several conditions is met.
+        $or: [
+            { name: { $regex: req.query.search, $options: "i" } }, // "i" means we want it to be case sensitive
+            { email: { $regex: req.query.search, $options: "i" } },
+        ]
+    }
+        : {};  // "ne" means not equal in regex
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.send(users);
+});
 
-
-})
-const testTest = asyncHandler(async (req, res) => {
-    res.json({ msg: "ITS WORKING!!!" })
-})
-module.exports = { registerUser, authUser, testTest };
+module.exports = { registerUser, authUser, testTest, allUsers };
