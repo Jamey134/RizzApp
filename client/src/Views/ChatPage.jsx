@@ -11,6 +11,8 @@ const ChatPage = () => {
         setChats(data);
     };
 
+    // Add logout function
+
     useEffect(() => {
         fetchChats();
     }, []);
@@ -18,7 +20,9 @@ const ChatPage = () => {
 
     return <div>
         {chats.map(chat => <div key = {chat.id}>{chat.chatName}</div>)}
+        <h1>HELLLLLLLLLOOOOOOO!!!!!!!!</h1>
     </div>;
+
 };
 
 export default ChatPage

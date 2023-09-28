@@ -1,5 +1,8 @@
 import { FormControl, FormLabel, VStack, Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useToast } from '@chakra-ui/react'
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -7,10 +10,59 @@ const Login = () => {
     const [show, setShow] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
+    const toast = useToast()
+    const navigate = useNavigate()
 
     const handleClick = () => setShow(!show);
-    const submitHandler = () => { };
 
+    const submitHandler = async () => {
+        setLoading(true);
+        if (!email || !password) {
+            toast({
+                title: "Please Fill All of the Fields",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
+        }
+        try {
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            };
+
+            const { data } = await axios.post("/api/user/login", { email, password }, config);
+
+            toast({
+                title: "Login Successful!",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+
+            localStorage.setItem("userInfo", JSON.stringify(data));
+
+            setLoading(false);
+            navigate("/chats")
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                status: "warning",
+                //description: error.response.data.message,
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false)
+        };
+    }
+    
     return <VStack spacing="5px">
         <FormControl id="login" isRequired>
             <FormLabel>Email</FormLabel>
@@ -28,10 +80,11 @@ const Login = () => {
             </InputGroup>
 
         </FormControl>
-        <Button colorScheme="whatsapp" width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
+        <Button colorScheme="whatsapp" isLoading={loading} width="100%" style={{ marginTop: 15 }} onClick={submitHandler}>
             Login
         </Button>
     </VStack>;
+
 }
 
 

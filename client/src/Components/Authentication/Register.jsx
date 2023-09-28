@@ -15,7 +15,7 @@ const Register = () => {
     const [profilePic, setProfilePic] = useState()
     const [loading, setLoading] = useState(false)
     const toast = useToast() // The toast component is used to give feedback to users after an action has taken place.
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const handleClick = () => setShow(!show);
 
@@ -112,7 +112,7 @@ const Register = () => {
             localStorage.setItem("userInfo", JSON.stringify(data));
 
             setLoading(false);
-            history("/chats")
+            navigate("/chats")
         } catch (error) {
             toast({
                 title: "Error Occured!",

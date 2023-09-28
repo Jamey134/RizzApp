@@ -31,7 +31,7 @@ const Dashboard = () => {
                         <Tab width="50%">Register</Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel>{<Login />} </TabPanel>
+                        <TabPanel>{<Login/>} </TabPanel>
                         {<TabPanel> {<Register/>} </TabPanel>}
                     </TabPanels>
                 </Tabs>
