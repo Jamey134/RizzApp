@@ -7,4 +7,6 @@ module.exports = app => {
 
     app.post("/api/user/login", UserController.authUser);
 
+    app.get("/api/user/test", UserController.testTest);
+
 }

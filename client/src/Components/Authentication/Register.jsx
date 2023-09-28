@@ -112,12 +112,12 @@ const Register = () => {
             localStorage.setItem("userInfo", JSON.stringify(data));
 
             setLoading(false);
-            history.push("/chats")
+            history("/chats")
         } catch (error) {
             toast({
                 title: "Error Occured!",
                 status: "warning",
-                description: error.response.data.message,
+                //description: error.response.data.message,
                 duration: 5000,
                 isClosable: true,
                 position: "bottom",
