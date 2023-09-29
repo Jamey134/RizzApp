@@ -9,5 +9,5 @@ module.exports = app => {
 
     app.post("/api/user/login", UserController.authUser);
 
-    app.get("/", UserController.allUsers);
+    app.get("/api/user", UserController.allUsers);
 }

@@ -74,6 +74,7 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
+// Search for all users in DB
 const allUsers = asyncHandler(async (req, res) => {
     const keyword = req.query.search ? {
         // $or is an operator used for performing logical OR operations within queries. It allows you to select documents where at least one of several conditions is met.
