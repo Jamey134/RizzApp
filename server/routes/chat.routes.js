@@ -1,10 +1,9 @@
-// const ChatController = require('../controllers/chat.controller');
+const ChatController = require('../controllers/chat.controller');
+const { protect } = require('../middleware/authMiddleware');
+const { accessChat } = require("../controllers/chat.controller");
 
-// const { protect } = require('../middleware/authMiddleware');
-
-
-// module.exports = app => {
-//     app.post("/api/chat", protect, ChatController.accessChat),
+module.exports = app => {
+    app.post("/api/chat", protect, ChatController.accessChat),
 
 //     app.get("/api/chat", protect, ChatController.fetchChats),
 
@@ -15,7 +14,7 @@
 //     app.put("api/chat/removeGroup", protect, ChatController.removeFromGroup),
 
 //     app.put("api/chat/addGroup", protect, ChatController.addToGroup)
-// }
+};
 
 
 
