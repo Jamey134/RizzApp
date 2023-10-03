@@ -19,8 +19,8 @@ app.use(cors())
 
 const routeBridgeUser = require("./routes/user.routes")
 routeBridgeUser(app)
-// const routeBridgeChat = require("./routes/chat.routes")
-// routeBridgeChat(app)
+const routeBridgeChat = require("./routes/chat.routes")
+routeBridgeChat(app)
 
 app.use(notFound);
 app.use(errorHandler);

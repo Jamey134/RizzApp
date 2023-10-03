@@ -1,4 +1,4 @@
-const chat = require("../models/chat.model")
+const Chat = require("../models/chat.model")
 const User = require("../models/user.model")
 const asyncHandler = require("express-async-handler");
 
@@ -42,12 +42,12 @@ module.exports = {
             var chatData = {
                 chatName: "sender",
                 isGroupChat: false,
-                users: [req, user._id, userId],
+                users: [req.user._id, userId],
             };
             try {
-                const createChat = await chat.create(chatData);
+                const createChat = await Chat.create(chatData);
 
-                const FullChat = await chat.findOne({ _id: createdChat._id }).populate("users", "-password");
+                const FullChat = await Chat.findOne({ _id: createChat._id }).populate("users", "-password");
 
                 res.status(200).send(FullChat);
             } catch (error) {

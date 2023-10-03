@@ -25,7 +25,7 @@ const ChatSchema = new mongoose.Schema({
     },
     isGroupChat: {
         type: Boolean,
-        default: False,
+        default: false,
         //required: [true, "Please provide a price"]
     },
 
