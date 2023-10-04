@@ -2,7 +2,6 @@ import { useState, createContext, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
 
-
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
@@ -29,6 +28,6 @@ const ChatProvider = ({ children }) => {
 export const ChatState = () => {
 
     return useContext(ChatContext);
-}
+};
 
 export default ChatProvider;
