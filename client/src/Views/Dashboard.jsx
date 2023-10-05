@@ -1,25 +1,10 @@
-import React, { useEffect } from "react"
+import React from 'react'
 import { Container, Box, Text, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react"
+
 import Login from "../Components/Authentication/Login"
 import Register from "../Components/Authentication/Register"
-import { useNavigate } from "react-router-dom"
 
 const Dashboard = () => {
-    const nav = useNavigate();
-
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("userInfo"));
-
-
-        if (user)
-            nav("/chats")
-
-    }, [nav]);
-
-
-
-
-
     return (
         <Container maxWidth='xl' centerContent>
             <Box display='flex'
@@ -46,8 +31,8 @@ const Dashboard = () => {
                         <Tab width="50%">Register</Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel>{<Login />} </TabPanel>
-                        {<TabPanel> {<Register />} </TabPanel>}
+                        <TabPanel>{<Login/>} </TabPanel>
+                        {<TabPanel> {<Register/>} </TabPanel>}
                     </TabPanels>
                 </Tabs>
             </Box>

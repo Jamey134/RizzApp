@@ -56,7 +56,6 @@ module.exports = {
             }
         }
     }),
-    
     // function for finding one or more chats
     fetchChats: asyncHandler(async (req, res) => {
         try {
@@ -78,7 +77,6 @@ module.exports = {
             throw new Error(error.message);
         }
     }),
-    
     // function for creating a group chat
     createGroupChats: asyncHandler(async (req, res) => {
         if (!req.body.users || !req.body.name) {
@@ -114,7 +112,6 @@ module.exports = {
             throw new Error(error.message);
         }
     }),
-    
     // function for renaming a group chat
     renameGroup: asyncHandler(async (req, res) => {
         const { chatId, chatName } = req.body;
@@ -138,7 +135,6 @@ module.exports = {
             res.json(updatedChat);
         }
     }),
-    
     // function for adding someone to a group chat
     addToGroup: asyncHandler(async (req, res) => {
         const { chatId, userId } = req.body;
@@ -164,7 +160,6 @@ module.exports = {
             res.json(added);
         }
     }),
-
     // function to remove someone from group
     removeFromGroup: asyncHandler(async (req, res) => {
         const { chatId, userId } = req.body;
@@ -174,10 +169,10 @@ module.exports = {
         const removed = await Chat.findByIdAndUpdate(
             chatId,
             {
-                $pull: { users: userId }, // <--- Removing the users' array
+                $pull: { users: userId }, // <--Removing the users' array
             },
             {
-                new: true, // <--- Return the latest field
+                new: true, // <-- Return the latest field
             }
         )
             .populate("users", "-password")
