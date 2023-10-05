@@ -34,10 +34,10 @@ const SideDrawer = () => {
                     </Button>
                 </Tooltip>
                 {/*-------------- I may have to install npm package for awesome font ------------- */}
-                <Text fontSize={"2x1"} fontFamily={"Avantgarde"}>Rizz App </Text>
+                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizz App </Text>
                 <div>
                     <Menu>
-                        <MenuButton padding={1}>
+                        <MenuButton padding={2}>
                             <i class="fa-solid fa-exclamation"></i>
                         </MenuButton>
                         {/* <MenuList></MenuList> */}
