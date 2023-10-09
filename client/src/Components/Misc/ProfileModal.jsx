@@ -19,7 +19,7 @@ const ProfileModal = ({ user, children }) => {
                 <ModalCloseButton />
                 <ModalBody display={"flex"} flexDir={"column"} alignItems={"center"} justifyContent={"space-between"}>
                     <Image borderRadius={"full"} boxSize={"150px"} src={user.profilePic} alt={user.name} />
-                    
+
                     <Text fontSize={{ base: "28px", md: "30px" }} fontFamily={"Futura"}>
                         Email: {user.email}
                     </Text>
