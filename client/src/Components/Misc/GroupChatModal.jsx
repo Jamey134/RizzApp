@@ -1,13 +1,14 @@
-import { useDisclosure, Spinner, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useToast, FormControl, Input } from '@chakra-ui/react'
+import { useDisclosure, Box, Spinner, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useToast, FormControl, Input } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider';
 import axios from 'axios';
 import UserListItem from '../UserAvatar/UserListItem';
+import { UserBadgeItem } from '../UserAvatar/UserBadgeItem';
 
 const GroupChatModal = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [groupChatName, setGroupChatName] = useState();
-    const [selectedUsers, setSelectUsers] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -21,7 +22,6 @@ const GroupChatModal = ({ children }) => {
         if (!query) {
             return;
         }
-
 
         try {
             setLoading(true);
@@ -49,7 +49,22 @@ const GroupChatModal = ({ children }) => {
 
     const handleSubmit = () => { };
 
-    const handleGroup = () => {};
+    const handleDelete = (deleteUser) => { 
+        setSelectedUsers(selectedUsers.filter((s) => s._id !== deleteUser._id));
+    };
+
+    const handleGroup = (addUser) => {
+        if (selectedUsers.includes(addUser)) {
+            toast({
+                title: "User Already Added!",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
+            })
+        }
+        setSelectedUsers([...selectedUsers, addUser]); {/* This will spread the selected users and add to group}*/ }
+    };
 
     return (
         <>
@@ -78,11 +93,18 @@ const GroupChatModal = ({ children }) => {
                             />
                         </FormControl>
 
+                        <Box width={"100%"} display={"flex"} flexWrap={"wrap"}>
+                            {selectedUsers.map(u => (
+                                <UserBadgeItem key={user._id} user={u}
+                                    handleFunction={() => handleDelete(u)} />
+                            ))}
+                        </Box>
+
                         {/* render searched users*/}
-                        {/* Display loading Icon*/} 
-                        {loading ? <Spinner></Spinner> : (   
+                        {/* Display loading Icon*/}
+                        {loading ? <Spinner></Spinner> : (
                             searchResults?.slice(0, 4).map(user => (
-                                <UserListItem key={user._id} user = {user} handleFunction = {() => handleGroup(user)} />
+                                <UserListItem key={user._id} user={user} handleFunction={() => handleGroup(user)} />
                             ))
                         )}
                     </ModalBody>
