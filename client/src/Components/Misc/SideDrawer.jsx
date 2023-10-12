@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider';
 import { Tooltip, Box, Button, Text, MenuButton, Menu, MenuList, Avatar, MenuItem, MenuDivider, Drawer, useDisclosure, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Input, useToast, Spinner } from '@chakra-ui/react';
+import { ChatIcon } from '@chakra-ui/icons';
 import ProfileModal from './ProfileModal';
 import ChatLoading from '../ChatLoading';
 import UserListItem from '../UserAvatar/UserListItem';
@@ -117,7 +118,7 @@ const SideDrawer = () => {
                     </Button>
                 </Tooltip>
                 {/*-------------- I may have to install npm package for awesome font ------------- */}
-                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizz App </Text>
+                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizz App <ChatIcon/> </Text>
                 <div>
                     <Menu>
                         <MenuButton padding={2}>
