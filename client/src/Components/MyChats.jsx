@@ -76,7 +76,7 @@ const MyChats = ({fetchAgain}) => {
                 padding={3}
                 background={"#F8F8F8"}
                 width={"100%"}
-                height={"100%"}
+                height={"90%"}
                 borderRadius={"large"}
                 overflowY={"hidden"}>
 
