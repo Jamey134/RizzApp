@@ -82,9 +82,10 @@ const GroupChatModal = ({ children }) => {
                 position: "bottom",
             });
         } catch (error) {
+            console.log(error);
             toast({
                 title: "Failed to Create Group Chat!",
-                description: error.res.data,
+                description: error.message,
                 status: "error",
                 duration: 5000,
                 isClosable: true,

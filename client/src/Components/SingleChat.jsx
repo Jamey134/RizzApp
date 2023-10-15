@@ -6,7 +6,7 @@ import { getSender, getSenderFull } from '../config/ChatLogic';
 import ProfileModal from './Misc/ProfileModal';
 import UpdateGroupChatModal from './Misc/UpdateGroupChatModal';
 
-const SingleChat = (fetchAgain, setFetchAgain) => {
+const SingleChat = ({fetchAgain, setFetchAgain}) => {
 
     const { user, selectedChat, setSelectedChat } = ChatState();
 

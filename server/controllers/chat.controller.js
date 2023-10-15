@@ -74,7 +74,7 @@ module.exports = {
                 });
         } catch (error) {
             res.status(400);
-            throw new Error(error.message);
+            throw new Error({message: error.message});
         }
     }),
     // function for creating a group chat
