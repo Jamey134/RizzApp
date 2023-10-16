@@ -118,7 +118,7 @@ const SideDrawer = () => {
                     </Button>
                 </Tooltip>
                 {/*-------------- I may have to install npm package for awesome font ------------- */}
-                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizz App <ChatIcon/> </Text>
+                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizzics 101<ChatIcon/> </Text>
                 <div>
                     <Menu>
                         <MenuButton padding={2}>
