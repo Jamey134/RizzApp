@@ -1,5 +1,5 @@
 const UserController = require('../controllers/user.controller');
-const { registerUser, authUser, allUsers } = require("../controllers/user.controller");
+//const { registerUser, authUser, allUsers } = require("../controllers/user.controller");
 const { protect } = require('../middleware/authMiddleware');
 
 

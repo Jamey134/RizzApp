@@ -18,11 +18,11 @@ app.use(cors())
 //connects ther server to the routes section. Therefore, attaching all of the routes.
 
 const routeBridgeUser = require("./routes/user.routes")
-routeBridgeUser(app)
+routeBridgeUser(app);
 const routeBridgeChat = require("./routes/chat.routes")
-routeBridgeChat(app)
+routeBridgeChat(app);
 const routeBridgeMessage = require("./routes/message.routes")
-routeBridgeChat(app)
+routeBridgeMessage(app);
 
 app.use(notFound);
 app.use(errorHandler);
