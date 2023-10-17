@@ -6,6 +6,4 @@ module.exports = app => {
 
     app.get("/api/message/:chatId", protect, MessageController.allMessages)
 
-
-
 };
