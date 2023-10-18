@@ -6,14 +6,16 @@ import ChatLoading from './ChatLoading';
 import { getSender } from '../config/ChatLogic';
 import GroupChatModal from './Misc/GroupChatModal';
 
-const MyChats = ({fetchAgain}) => {
-    const [loggedUser, setloggedUser] = useState();
+const MyChats = ({ fetchAgain }) => {
+    // State and context initialization
+    const [loggedUser, setLoggedUser] = useState();
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
+    // Toast notification for error messages
     const toast = useToast();
 
+    // Function to fetch the user's chats from the server
     const fetchChats = async () => {
-        // console.log(user._id);
         try {
             const config = {
                 headers: {
@@ -21,12 +23,13 @@ const MyChats = ({fetchAgain}) => {
                 },
             };
 
+            // Make an API call to fetch user's chats
             const { data } = await axios.get("/api/chat", config);
-            console.log(data)
             setChats(data);
         } catch (error) {
+            // Handle errors and show a toast notification
             toast({
-                title: "Error Occured!",
+                title: "Error Occurred!",
                 description: "Failed to Load the chats",
                 status: "error",
                 duration: 5000,
@@ -36,10 +39,14 @@ const MyChats = ({fetchAgain}) => {
         }
     };
 
+    // useEffect hook to run fetchChats and set loggedUser when fetchAgain changes
     useEffect(() => {
-        setloggedUser(JSON.parse(localStorage.getItem("userInfo")));
+        // Get the logged-in user's information from local storage
+        setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+        // Fetch the user's chats
         fetchChats();
-    }, [fetchAgain])
+    }, [fetchAgain]);
+
     return (
         <Box
             display={{ base: selectedChat ? "none" : "flex", medium: "flex" }}
@@ -59,16 +66,16 @@ const MyChats = ({fetchAgain}) => {
                 width={"100%"}
                 justifyContent={"space-between"}
                 alignItems={"center"}>
+                {/* Header with "My Chats" and "New Group Chat" button */}
                 My Chats
                 <GroupChatModal>
-
-                <Button
-                    display={"flex"}
-                    fontSize={{ base: "20px", medium: "10px", large: "20px" }}
-                    rightIcon={<i class="fa-solid fa-plus"></i>}>
-                    New Group Chat
-                </Button>
-                        </GroupChatModal>
+                    <Button
+                        display={"flex"}
+                        fontSize={{ base: "20px", medium: "10px", large: "20px" }}
+                        rightIcon={<i class="fa-solid fa-plus"></i>}>
+                        New Group Chat
+                    </Button>
+                </GroupChatModal>
             </Box>
             <Box
                 display={"flex"}
@@ -93,6 +100,7 @@ const MyChats = ({fetchAgain}) => {
                                 borderRadius={"large"}
                                 key={chat._id}>
                                 <Text>
+                                    {/* Display sender's name or group chat name */}
                                     {!chat.isGroupChat ?
                                         getSender(loggedUser, chat.users)
                                         : chat.chatName}
@@ -101,13 +109,12 @@ const MyChats = ({fetchAgain}) => {
                         ))}
                     </Stack>
                 ) : (
+                    // Show a loading indicator if chats are still loading
                     <ChatLoading />
                 )}
             </Box>
         </Box>
-    )
+    );
 }
 
-
-
-export default MyChats
+export default MyChats;
