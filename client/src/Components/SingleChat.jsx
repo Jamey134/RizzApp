@@ -1,20 +1,61 @@
 import React, { useState } from 'react'
 import { ChatState } from '../Context/ChatProvider';
-import { Box, IconButton, Input, Spinner, Text, FormControl } from '@chakra-ui/react';
+import { Box, IconButton, Input, Spinner, Text, FormControl, useToast } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { getSender, getSenderFull } from '../config/ChatLogic';
 import ProfileModal from './Misc/ProfileModal';
 import UpdateGroupChatModal from './Misc/UpdateGroupChatModal';
+import axios from 'axios';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-    const [message, setMessages] = useState([]);
+    const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState();
 
     const { user, selectedChat, setSelectedChat } = ChatState();
+
+    const toast = useToast();
     
-    const sendMessage = () => {}; //<--- Work on later
-    const typingHandler = () => {}; //<--- Work on later
+    const sendMessage = async (e) => {
+        if(e.key === "Enter" && newMessage) {
+            try {
+                const config = {
+                    headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                    }
+                };
+
+                const {data} = await axios.post("/api/message",
+                {
+                    content: newMessage,
+                    chatId: selectedChat._id,
+                },
+                config
+                );
+
+                console.log(data); //<--- Checking if the sender's message is registering.
+
+                setNewMessage("");
+                setMessages([...messages, data]);
+            } catch (error) {
+                toast({
+                    title: "Error Occured!",
+                    description: "Failed to Send Message",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "top",
+                });
+            }
+        }
+    }; //<--- Work on later
+    
+    const typingHandler = (e) => {
+        setNewMessage(e.target.value);
+
+        // Typing indicator Logic
+    }; 
 
 
     return (
