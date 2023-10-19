@@ -9,6 +9,13 @@ import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import "/Users/jamey134/Desktop/CodingProjects/RizzApp/client/src/Components/Style.css";
 
+
+import io from "socket.io-client";
+
+const ENDPOINT = process.env.PORT; // Change for deployment
+
+var socket, selectedChatCompare;
+
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -30,7 +37,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             const { data } = await axios.get(`api/message/${selectedChat._id}`, config);
 
-            
+
             setMessages(data);
             setLoading(false);
         } catch (error) {
@@ -87,6 +94,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             }
         }
     };
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+    }, []);
+
 
     const typingHandler = (e) => {
         setNewMessage(e.target.value);

@@ -5,6 +5,7 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
+
 const { notFound, errorHandler } = require("../server/middleware/errorMiddleware")
 
 
@@ -27,4 +28,17 @@ routeBridgeMessage(app);
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log("---------> SERVER IS ONLINE!!! port = ", port));
+// socket.io setup
+const server = app.listen(port, () => console.log("---------> SERVER IS ONLINE!!! port = ", port));
+
+const io = require("socket.io")(server, {
+    
+    pingTimeout: 60000, // pingTimeout is the amount of time it will wait while being inactive, thus closing the connection to save bandwidth
+    cors: {
+        origin: "http://localhost:3000",
+    },
+});
+
+io.on("connection", (socket) => {
+    console.log("CONNECTED TO SOCKET.IO");
+})
