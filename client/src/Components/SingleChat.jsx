@@ -21,7 +21,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [newMessage, setNewMessage] = useState();
     const [socketConnected, setSocketConnected] = useState(false);
 
-    const toast = useToast();
+    
     const { user, selectedChat, setSelectedChat } = ChatState();
 
     const fetchMessages = async () => {
@@ -41,6 +41,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             setMessages(data);
             setLoading(false);
+
+            socket.emit("join chat", selectedChat._id);
         } catch (error) {
             toast({
                 title: "Error Occured!",
@@ -57,6 +59,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     useEffect(() => {
         fetchMessages();
+
+        selectedChatCompare = selectedChat;
     }, [selectedChat])
 
     const toast = useToast();
@@ -99,7 +103,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         socket = io(ENDPOINT);
         socket.emit("setup", user);
-        socket.on("connection", () => )
+        socket.on("connection", () => setSocketConnected(true));
     }, []);
 
 
