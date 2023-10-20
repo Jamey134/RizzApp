@@ -9,7 +9,6 @@ import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import "/Users/jamey134/Desktop/CodingProjects/RizzApp/client/src/Components/Style.css";
 
-
 import io from "socket.io-client";
 
 const ENDPOINT = process.env.PORT; // Change for deployment
@@ -20,7 +19,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState();
+    const [socketConnected, setSocketConnected] = useState(false);
 
+    const toast = useToast();
     const { user, selectedChat, setSelectedChat } = ChatState();
 
     const fetchMessages = async () => {
@@ -97,6 +98,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     useEffect(() => {
         socket = io(ENDPOINT);
+        socket.emit("setup", user);
+        socket.on("connection", () => )
     }, []);
 
 
