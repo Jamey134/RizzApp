@@ -32,7 +32,7 @@ app.use(errorHandler);
 const server = app.listen(port, () => console.log("---------> SERVER IS ONLINE!!! port = ", port));
 
 const io = require("socket.io")(server, {
-    
+
     pingTimeout: 60000, // pingTimeout is the amount of time it will wait while being inactive, thus closing the connection to save bandwidth
     cors: {
         origin: "http://localhost:3000",
@@ -43,8 +43,8 @@ io.on("connection", (socket) => {
     console.log("CONNECTED TO SOCKET.IO");
 
     socket.on("setup", (userData) => {
-        socket.json(userData._id);
-       console.log(userData._id); // Test when connecte to internet
+        socket.join(userData._id);
+        console.log(userData._id);
         socket.emit("connected");
 
     });
@@ -57,12 +57,12 @@ io.on("connection", (socket) => {
     socket.on("new message", (newMessageReceived) => {
         var chat = newMessageReceived.chat;
 
-        if(!chat.users) return console.log("chat.users not defined!");
+        if (!chat.users) return console.log("chat.users not defined!");
 
-        chat.users.forEach(user => {
-            if(user._id == newMessageReceived.sender._id) return;
+        chat.users.forEach((user) => {
+            if (user._id == newMessageReceived.sender._id) return;
 
             socket.in(user._id).emit("message received", newMessageReceived);
-        })
-    })
+        });
+    });
 })

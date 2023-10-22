@@ -21,7 +21,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [newMessage, setNewMessage] = useState();
     const [socketConnected, setSocketConnected] = useState(false);
 
-    
+    const toast = useToast();
     const { user, selectedChat, setSelectedChat } = ChatState();
 
     const fetchMessages = async () => {
@@ -58,12 +58,30 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     console.log(messages);
 
     useEffect(() => {
+        socket = io(ENDPOINT);
+        socket.emit("setup", user);
+        socket.on("connection", () => setSocketConnected(true));
+    }, []);
+
+    useEffect(() => {
         fetchMessages();
 
         selectedChatCompare = selectedChat;
-    }, [selectedChat])
+    }, [selectedChat]);
 
-    const toast = useToast();
+    useEffect(() => {
+        socket.on("message received", (newMessageReceived) => {
+            if (
+                !selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id
+            ) {
+
+            } else {
+                setMessages([...messages, newMessageReceived]);
+            }
+        });
+
+
+    });
 
     const sendMessage = async (e) => {
         if (e.key === "Enter" && newMessage) {
@@ -85,7 +103,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
                 console.log(data); // <--- Checking if the sender's message is registering.
 
-                setNewMessage("");
+                socket.emit("new message", data);
+                // setNewMessage("");
                 setMessages([...messages, data]);
             } catch (error) {
                 toast({
@@ -99,12 +118,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             }
         }
     };
-
-    useEffect(() => {
-        socket = io(ENDPOINT);
-        socket.emit("setup", user);
-        socket.on("connection", () => setSocketConnected(true));
-    }, []);
 
 
     const typingHandler = (e) => {
