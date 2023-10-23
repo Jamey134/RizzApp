@@ -56,11 +56,11 @@ const MyChats = ({ fetchAgain }) => {
             background={"white"}
             width={{ base: "100%", md: "30%" }}
             borderRadius={"large"}
-            borderWidth={"3px"}>
+            borderWidth={"1px"}>
             <Box
                 paddingBottom={3}
                 px={3}
-                fontSize={{ base: "38px", medium: "40px" }}
+                fontSize={{ base: "28px", medium: "40px" }}
                 fontFamily={"Futura"}
                 display={"flex"}
                 width={"100%"}
@@ -85,7 +85,8 @@ const MyChats = ({ fetchAgain }) => {
                 width={"100%"}
                 height={"90%"}
                 borderRadius={"large"}
-                overflowY={"hidden"}>
+                overflowY={"hidden"}
+            >
 
                 {chats ? (
                     <Stack overflowY={"scroll"}>

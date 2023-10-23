@@ -8,7 +8,8 @@ import UpdateGroupChatModal from './Misc/UpdateGroupChatModal';
 import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import "/Users/jamey134/Desktop/CodingProjects/RizzApp/client/src/Components/Style.css";
-
+import animationData from "../Animation/typing.json"
+import Lottie from "lottie-react"
 import io from "socket.io-client";
 
 const ENDPOINT = process.env.PORT; // Change for deployment
@@ -23,7 +24,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [typing, setTyping] = useState(false);
     const [isTyping, setisTyping] = useState(false)
 
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+
     const toast = useToast();
+
     const { user, selectedChat, setSelectedChat } = ChatState();
 
     const fetchMessages = async () => {
@@ -133,7 +144,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         if (!typing) {
             setTyping(true)
-            socket.emit("trping", selectedChat._id);
+            socket.emit("typing", selectedChat._id);
         }
         let lastTypingTime = new Date().getTime()
         var timerLength = 3000;
@@ -209,7 +220,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             </div>
                         )}
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-                            {isTyping ? <div>Loading...</div> : <></>}
+                            {isTyping ? (
+                                <div>
+                                    <Lottie
+                                        options={defaultOptions}
+                                        width={70}
+                                        style={{ marginBottom: 15, marginLeft: 0 }}
+                                    />
+                                </div>
+                            ) : (<></>)}
                             <Input
                                 variant="filled"
                                 background={"F8F8F8"}
