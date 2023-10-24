@@ -2,12 +2,15 @@ import React from 'react'
 import { useState } from 'react'
 import { ChatState } from '../../Context/ChatProvider';
 import { Tooltip, Box, Button, Text, MenuButton, Menu, MenuList, Avatar, MenuItem, MenuDivider, Drawer, useDisclosure, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Input, useToast, Spinner } from '@chakra-ui/react';
-import { ChatIcon } from '@chakra-ui/icons';
+import { ChatIcon, EmailIcon } from '@chakra-ui/icons';
 import ProfileModal from './ProfileModal';
 import ChatLoading from '../ChatLoading';
 import UserListItem from '../UserAvatar/UserListItem';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { getSender } from '../../config/ChatLogic';
+
+
 
 
 const SideDrawer = () => {
@@ -16,8 +19,7 @@ const SideDrawer = () => {
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState();
 
-    const { user, setSelectedChat, chats, setChats } = ChatState();
-    const navi = useNavigate();
+    const { user, setSelectedChat, chats, setChats, notification, setNotification } = ChatState(); const navi = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
 
@@ -81,7 +83,7 @@ const SideDrawer = () => {
 
             const { data } = await axios.post("/api/chat", { userId }, config); // This will return our created chat
 
-            if(!chats.find((c) => c._id === data._id)) setChats([data, ...chats]); // This will update the chats
+            if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]); // This will update the chats
             setSelectedChat(data);
             setLoadingChat(false);
             onClose();
@@ -117,14 +119,25 @@ const SideDrawer = () => {
                         <Text display={{ base: "none", medium: "flex" }} px={"4"}>Search User</Text>
                     </Button>
                 </Tooltip>
-                {/*-------------- I may have to install npm package for awesome font ------------- */}
-                <Text fontSize={"2x1"} fontFamily={"Futura"}>Rizzics 101<ChatIcon/> </Text>
+                <Text fontSize={"2x1"} fontFamily={"Futura"}>The Rizz App <ChatIcon /> </Text>
                 <div>
                     <Menu>
                         <MenuButton padding={2}>
-                            <i class="fa-solid fa-exclamation"></i>
+                            <EmailIcon fontSize={"2x1"} margin={1} />  <span class="position-absolute top-0 start-100 translate-middle badge">
+                                {notification.length}</span>
                         </MenuButton>
-                        {/* <MenuList></MenuList> */}
+                        <MenuList paddingLeft={2}>
+                            {!notification.length && "No New Messages"}
+                            {notification.map(notif => (
+                                <MenuItem key={notif._id} onClick={() => {
+                                    setSelectedChat(notif.chat);
+                                    setNotification(notification.filter((n) => n !== notif));
+                                }}
+                                >
+                                    {notif.chat.isGroupChat ? `New Message in ${notif.chat.chatName}` : `New Message from ${getSender(user, notif.chat.users)}`}
+                                </MenuItem>
+                            ))}
+                        </MenuList>
                     </Menu>
                     <Menu>
                         <MenuButton as={Button} rightIcon={<i class="fa-sharp fa-solid fa-circle-chevron-down"></i>}>
@@ -158,7 +171,7 @@ const SideDrawer = () => {
                                     handleFunction={() => accessChat(user._id)} />
                             ))
                         )}
-                        {loadingChat && <Spinner marginLeft={"auto"} display={"flex"}/>}
+                        {loadingChat && <Spinner marginLeft={"auto"} display={"flex"} />}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

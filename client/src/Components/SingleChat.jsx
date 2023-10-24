@@ -68,7 +68,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
     };
 
-    console.log(messages);
+    // console.log(messages);
 
     useEffect(() => {
         socket = io(ENDPOINT);
@@ -84,7 +84,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         selectedChatCompare = selectedChat;
     }, [selectedChat]);
 
-    console.log(notification, "<-------------")
+    // console.log(notification, "<-------------")
 
     useEffect(() => {
         socket.on("message received", (newMessageReceived) => {
