@@ -5,16 +5,13 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
+// const path = require("path"); //<--- deployment
 
 const { notFound, errorHandler } = require("../server/middleware/errorMiddleware")
-
 
 app.use(express.json()); //Allows app to accept json
 app.use(express.urlencoded({ extended: true })); //Allows app to read json
 app.use(cors())
-
-
-
 
 //connects ther server to the routes section. Therefore, attaching all of the routes.
 
@@ -25,12 +22,24 @@ routeBridgeChat(app);
 const routeBridgeMessage = require("./routes/message.routes")
 routeBridgeMessage(app);
 
-app.use(notFound);
-app.use(errorHandler);
+// ------------------------------Deployment------------------------------ //
+// const __dirname1 = path.resolve();
+// if(process.env.NODE_ENV === "production") {
+//     app.use(express.static(path.join(__dirname1, "/client/build")));
 
-// socket.io setup
+//     app.get("*", (req, res) => {
+//         res.sendFile()
+//     })
+// } else {
+//     app.get("/", (req, res)=> {
+//         res.send("API IS RUNNING WELL!");
+//     });
+// }
+// ------------------------------Deployment------------------------------ //
+
 const server = app.listen(port, () => console.log("---------> SERVER IS ONLINE!!! port = ", port));
 
+// socket.io setup
 const io = require("socket.io")(server, {
 
     pingTimeout: 60000, // pingTimeout is the amount of time it will wait while being inactive, thus closing the connection to save bandwidth
@@ -38,6 +47,11 @@ const io = require("socket.io")(server, {
         origin: "http://localhost:3000",
     },
 });
+
+app.use(notFound);
+app.use(errorHandler);
+
+
 
 io.on("connection", (socket) => {
     console.log("CONNECTED TO SOCKET.IO");
